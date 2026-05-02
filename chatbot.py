@@ -1,7 +1,7 @@
 import streamlit as st
 from openai import OpenAI
 
-# 将 .env 替换为 st.secrets 来获取 API 密钥
+# 获取 API 密钥
 client = OpenAI(
     api_key=st.secrets["sk-b4920569d21a43729abc82b4e6682fa1"],
     base_url="https://api.deepseek.com/v1",
