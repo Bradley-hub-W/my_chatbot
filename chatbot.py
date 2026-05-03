@@ -1,14 +1,11 @@
 import streamlit as st
 from openai import OpenAI
 
-# 无需再导入 load_dotenv！
-
 client = OpenAI(
-    api_key=st.secrets["OPENAI_API_KEY"],   
-    base_url="https://api.deepseek.com/v1", 
+    api_key=st.secrets["OPENAI_API_KEY"],
+    base_url="https://api.deepseek.com/v1",
 )
 
-# —— 以下代码与之前完全一致，无需改动，为保持完整我再次贴上 ——
 st.set_page_config(page_title="我的智能客服", page_icon="🤖")
 st.title("🤖 智能客服机器人")
 st.caption("我可以回答产品相关问题，试试问我吧！")
