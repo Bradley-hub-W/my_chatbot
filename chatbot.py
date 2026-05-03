@@ -1,9 +1,16 @@
 import streamlit as st
 from openai import OpenAI
 
+# 无需再导入 load_dotenv！
+
+client = OpenAI(
+    api_key=st.secrets["OPENAI_API_KEY"],   
+    base_url="https://api.deepseek.com/v1", 
+)
+
 # 获取 API 密钥
 client = OpenAI(
-    api_key=st.secrets["sk-b4920569d21a43729abc82b4e6682fa1"],
+    api_key=st.secrets["OPENAI_API_KEY"]
     base_url="https://api.deepseek.com/v1",
 )
 
