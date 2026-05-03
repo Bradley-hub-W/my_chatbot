@@ -77,7 +77,7 @@ if prompt := st.chat_input("请输入您的问题..."):
     with st.chat_message("assistant"):
         stream = client.chat.completions.create(
             model="deepseek-chat",
-            messages=st.session_state.messages,
+            messages=st.chat_messages,
             stream=True,
             temperature=0.2,       # 客服专用：稳定、准确
             max_tokens=1024,      # 不长不短
