@@ -13,7 +13,7 @@ st.title("🤖 智能客服机器人")
 st.caption("我可以回答产品相关问题，试试问我吧！")
 
 if "conversations" not in st.session_state:
-    st.session_state.cnversations = []
+    st.session_state.conversations = []
 if "current_conv_id" not in st.session_state:
     st.session_state.current_conv_id = None
 
@@ -22,13 +22,13 @@ def create_new_conversation():
     new_conv = {
         "id": new_id,
         "title": "新对话",
-        messages: [
+        "messages": [
             {"role":"system", "content":"你是一位专业、友好的智能客服助手，回答要简洁准确。"}
         ]
     }
     st.session_state.conversations.append(new_conv)
     st.session_state.current_conv_id = new_id
-    st.rerun()
+    return new_conv
 
 def get_current_conversation():
     if st.session_state.current_conv_id is None:
