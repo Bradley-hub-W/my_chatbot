@@ -17,38 +17,6 @@ if "conversations" not in st.session_state:
 if "current_conv_id" not in st.session_state:
     st.session_state.current_conv_id = None
 
-current_conv = get_current_conversation()
-chat_messages = current_conv["messages"] 
-
-for msg in chat_messages:
-    if msg["role"] != "system":
-        with st.chat_message(msg["role"]):
-            st.markdown(msg["content"])
-
-if prompt := st.chat_input("请输入您的问题..."):
-    with st.chat_message("user"):
-        st.markdown(prompt)
-    chat_messages.append({"role":"user","content":prompt})
-
-    if len(chat_messages) == 2:
-        current_conv["title"] = prompt[:20]  + ("..." if len(prompt) > 20 else "")
-
-    with st.chat_message("assistant"):
-        stream = client.chat.completions.create(
-            model="deepseek-chat",
-            messages=st.session_state.messages,
-            stream=True,
-            temperature=0.2,       # 客服专用：稳定、准确
-            max_tokens=1024,      # 不长不短
-            frequency_penalty=0.2,# 减少重复
-            presence_penalty=0.1, # 更自然
-            stop=["。"],          # 遇到句号可自动停（可选）
-        )
-        response = st.write_stream(stream)
-    chat_messages.append({"role":"assistant","content":response})
-
-
-
 def create_new_conversation():
     new_id = len(st.session_state.conversations)
     new_conv = {
@@ -89,3 +57,36 @@ with st.sidebar:
             {"role":"system", "content":"你是一位专业、友好的智能客服助手，回答要简洁准确。"}
         ]
         st.rerun()
+
+current_conv = get_current_conversation()
+chat_messages = current_conv["messages"] 
+
+for msg in chat_messages:
+    if msg["role"] != "system":
+        with st.chat_message(msg["role"]):
+            st.markdown(msg["content"])
+
+if prompt := st.chat_input("请输入您的问题..."):
+    with st.chat_message("user"):
+        st.markdown(prompt)
+    chat_messages.append({"role":"user","content":prompt})
+
+    if len(chat_messages) == 2:
+        current_conv["title"] = prompt[:20]  + ("..." if len(prompt) > 20 else "")
+
+    with st.chat_message("assistant"):
+        stream = client.chat.completions.create(
+            model="deepseek-chat",
+            messages=st.session_state.messages,
+            stream=True,
+            temperature=0.2,       # 客服专用：稳定、准确
+            max_tokens=1024,      # 不长不短
+            frequency_penalty=0.2,# 减少重复
+            presence_penalty=0.1, # 更自然
+            stop=["。"],          # 遇到句号可自动停（可选）
+        )
+        response = st.write_stream(stream)
+    chat_messages.append({"role":"assistant","content":response})
+
+
+
